@@ -1,0 +1,59 @@
+﻿@rendermode InteractiveServer
+
+@page "/login"
+
+@using Prothus.Application.DTOs
+
+@inject NavigationManager NavigationManager
+
+<MudContainer MaxWidth="MaxWidth.ExtraSmall"
+              Style="min-height:100vh;display:flex; align-items:center; justify-content:center">
+    <MudStack Style="align-items:center;">
+        <MudPaper Style="padding:0; width:350px">
+            <img src="images/gojo.jpg" alt="Login top" class="login-image" />
+            <MudForm>
+                <MudStack Style="align-items: center; padding: 24px">
+                    <MudText Typo="Typo.h4">Login</MudText>
+                    <MudTextField @bind-Value="userDto.Email" 
+                                  Variant="Variant.Outlined" 
+                                  Label="E-mail" 
+                                  Class="custom-textfield"
+                    />
+                    <MudTextField @bind-Value="userDto.Password" 
+                                  Variant="Variant.Outlined" 
+                                  Label="Password" 
+                                  Class="custom-textfield"
+                    />
+                    <MudStack Row="true">
+                        <MudButton Variant="Variant.Filled" Color="Color.Success">Login</MudButton>
+                        <MudButton OnClick="ToRegisterPage" Variant="Variant.Filled">Register</MudButton>
+                    </MudStack>
+                </MudStack>
+            </MudForm>
+        </MudPaper>
+    </MudStack>    
+</MudContainer>
+
+<style>
+    .login-image{
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .custom-textfield{
+        width: 300px ;
+    }
+
+</style>
+
+@code {
+    private RegisterUserDto userDto { get; set; } = new();
+
+    private void ToRegisterPage()
+    {
+        NavigationManager.NavigateTo("/register");
+    }
+
+}
