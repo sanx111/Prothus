@@ -25,7 +25,7 @@
     private bool _hideable = true;
     private bool _filterable = true;
     private bool _groupable = true;
-    public MudDataGrid<UserDto> grid = null;
+    public MudDataGrid<UserDto> grid = new();
     public IEnumerable<UserDto> users = new List<UserDto>();
 
     protected override async Task OnInitializedAsync()

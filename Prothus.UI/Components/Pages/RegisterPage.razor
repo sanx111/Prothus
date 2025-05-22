@@ -14,8 +14,9 @@
             
             <MudForm Style="align-items:center;">
                 <MudText Typo="Typo.h4">Register</MudText>
-                <MudTextField @bind-Value="email" Label="E-mail" Variant="Variant.Outlined"></MudTextField>
-                <MudTextField @bind-Value="password" Label="Password" InputType="InputType.Password" Variant="Variant.Outlined"></MudTextField>
+                <MudTextField @bind-Value="_name" Label="Name" Variant="Variant.Outlined"></MudTextField>
+                <MudTextField @bind-Value="_email" Label="E-mail" Variant="Variant.Outlined"></MudTextField>
+                <MudTextField @bind-Value="_password" Label="Password" InputType="InputType.Password" Variant="Variant.Outlined"></MudTextField>
                 <MudStack>
                     <MudButton OnClick="RegisterUser" Variant="Variant.Filled" Color="Color.Success">Register</MudButton>
                     <MudButton OnClick="Cancel" Variant="Variant.Filled" Color="Color.Primary">Back</MudButton>
@@ -23,17 +24,18 @@
             </MudForm>
         </MudPaper>
     </MudStack>
-    @if (!string.IsNullOrWhiteSpace(message))
+    @if (!string.IsNullOrWhiteSpace(_message))
     {
-    <MudAlert Severity="Severity.Info">@message</MudAlert>
+    <MudAlert Severity="Severity.Info">@_message</MudAlert>
     }   
 </MudContainer>
 
 @code {
-    private MudForm form = new();
-    private string email = string.Empty;
-    private string password = string.Empty;
-    private string message = string.Empty;
+    private MudForm _form = new();
+    private string _email = string.Empty;
+    private string _password = string.Empty;
+    private string _message = string.Empty;
+    private string _name = string.Empty;
 
     public void Cancel()
     {
@@ -46,18 +48,19 @@
         {
             var dto = new RegisterUserDto
             {
-                Email = email,
-                Password = password
+                Email = _email,
+                Password = _password,
+                Name = _name
             };
 
             await IRegisterUserService.RegisterUserAsync(dto);
-            message = "Cadastro realizado com sucesso!";
+            _message = "Cadastro realizado com sucesso!";
             
             
         }
         catch (Exception ex)
         {
-            message = $"Erro ao cadastrar: {ex.Message}";
+            _message = $"Erro ao cadastrar: {ex.Message}";
         }
     }
 }
