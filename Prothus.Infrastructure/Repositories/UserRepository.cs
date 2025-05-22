@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Prothus.Application.DTOs;
 using Prothus.Application.Interfaces;
 using Prothus.Domain.Entities;
 using Prothus.Infrastructure.Context;
@@ -19,6 +20,16 @@ namespace Prothus.Infrastructure.Repositories
         {
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<UserDto>> GetUsersAsync()
+        {
+            return await _context.Users.Select(x => new UserDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Email = x.Email,
+            }).ToListAsync();
         }
     }
 }
