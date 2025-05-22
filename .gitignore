@@ -54,3 +54,4 @@ TestResult.xml
 nunit-*.xml
 /.vs
 /Prothus/.vs
+Prothus.UI/Prothus.UI.csproj.user
