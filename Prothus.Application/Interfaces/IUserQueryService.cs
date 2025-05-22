@@ -1,11 +1,9 @@
 ﻿using Prothus.Application.DTOs;
-using Prothus.Domain.Entities;
 
 namespace Prothus.Application.Interfaces
 {
-    public interface IRegisterUserRepository
+    public interface IUserQueryService
     {
-        Task AddAsync(User User);
         Task<List<UserDto>> GetUsersAsync();
     }
 }
