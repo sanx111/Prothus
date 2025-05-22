@@ -14,12 +14,12 @@
             <MudForm>
                 <MudStack Style="align-items: center; padding: 24px">
                     <MudText Typo="Typo.h4">Login</MudText>
-                    <MudTextField @bind-Value="userDto.Email" 
+                    <MudTextField @bind-Value="_userManagementDto.Email" 
                                   Variant="Variant.Outlined" 
                                   Label="E-mail" 
                                   Class="custom-textfield"
                     />
-                    <MudTextField @bind-Value="userDto.Password" 
+                    <MudTextField @bind-Value="_userManagementDto.Password" 
                                   Variant="Variant.Outlined" 
                                   Label="Password" 
                                   Class="custom-textfield"
@@ -49,7 +49,7 @@
 </style>
 
 @code {
-    private RegisterUserDto userDto { get; set; } = new();
+    private UserManagementDto _userManagementDto { get; set; } = new();
 
     private void ToRegisterPage()
     {

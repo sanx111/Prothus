@@ -28,7 +28,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddMudServices();
 
 builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
-
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 builder.Services.AddScoped<IRegisterUserRepository, RegisterUserRepository>();
 
 
@@ -36,6 +36,12 @@ builder.Services.AddDbContextFactory<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate(); // Aplica as migrações pendentes
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
