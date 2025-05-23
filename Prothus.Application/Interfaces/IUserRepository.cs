@@ -3,9 +3,9 @@ using Prothus.Domain.Entities;
 
 namespace Prothus.Application.Interfaces
 {
-    public interface IRegisterUserRepository
+    public interface IUserRepository
     {
         Task AddAsync(User User);
-        Task<List<UserDto>> GetUsersAsync();
+        Task<List<UserQueryDto>> GetUsersAsync();
     }
 }

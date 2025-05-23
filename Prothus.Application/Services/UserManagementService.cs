@@ -6,15 +6,15 @@ using BCrypt;
 
 namespace Prothus.Application.Services
 {
-    public class RegisterUserService : IRegisterUserService
+    public class UserManagementService : IRegisterUserService
     {
-        private readonly IRegisterUserRepository _RegisterUserRepository;
-        public RegisterUserService(IRegisterUserRepository userRepository)
+        private readonly IUserRepository _RegisterUserRepository;
+        public UserManagementService(IUserRepository userRepository)
         {
             _RegisterUserRepository = userRepository;
         }
 
-        public async Task RegisterUserAsync(RegisterUserDto dto)
+        public async Task RegisterUserAsync(UserManagementDto dto)
         {
             var user = new User
             {

@@ -4,6 +4,6 @@ namespace Prothus.Application.Interfaces
 {
     public interface IRegisterUserService
     {
-        Task RegisterUserAsync(RegisterUserDto dto);
+        Task RegisterUserAsync(UserManagementDto dto);
     }
 }

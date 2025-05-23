@@ -4,6 +4,6 @@ namespace Prothus.Application.Interfaces
 {
     public interface IUserQueryService
     {
-        Task<List<UserDto>> GetUsersAsync();
+        Task<List<UserQueryDto>> GetUsersAsync();
     }
 }

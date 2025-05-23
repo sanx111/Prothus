@@ -7,11 +7,11 @@ using Prothus.Infrastructure.Context;
 
 namespace Prothus.Infrastructure.Repositories
 {
-    public class RegisterUserRepository : IRegisterUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _context;
 
-        public RegisterUserRepository(AppDbContext context)
+        public UserRepository(AppDbContext context)
         {
             _context = context;
         }
@@ -22,9 +22,9 @@ namespace Prothus.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<UserDto>> GetUsersAsync()
+        public async Task<List<UserQueryDto>> GetUsersAsync()
         {
-            return await _context.Users.Select(x => new UserDto()
+            return await _context.Users.Select(x => new UserQueryDto()
             {
                 Id = x.Id,
                 Name = x.Name,
