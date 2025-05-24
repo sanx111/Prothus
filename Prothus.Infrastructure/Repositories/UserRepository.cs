@@ -29,7 +29,15 @@ namespace Prothus.Infrastructure.Repositories
                 Id = x.Id,
                 Name = x.Name,
                 Email = x.Email,
+                DateCreated = x.DateCreated,
             }).ToListAsync();
         }
+
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == email);
+        }
+
     }
 }

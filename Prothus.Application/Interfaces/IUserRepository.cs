@@ -7,5 +7,7 @@ namespace Prothus.Application.Interfaces
     {
         Task AddAsync(User User);
         Task<List<UserQueryDto>> GetUsersAsync();
+        Task<User?> GetByEmailAsync(string email);
+
     }
 }

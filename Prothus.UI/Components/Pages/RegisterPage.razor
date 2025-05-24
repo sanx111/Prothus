@@ -1,4 +1,4 @@
-﻿@rendermode InteractiveServer
+﻿
 
 @page "/register"
 @using Prothus.Application.DTOs
@@ -39,7 +39,7 @@
 
     public void Cancel()
     {
-        NavigationManager.NavigateTo("/login");
+        NavigationManager.NavigateTo("/");
     }
 
     public async Task RegisterUser()

@@ -1,33 +1,39 @@
-﻿@rendermode InteractiveServer
+﻿@page "/"
 
-@page "/login"
-
+@using Blazored.SessionStorage
 @using Prothus.Application.DTOs
+@using Prothus.Application.Interfaces
 
-@inject NavigationManager NavigationManager
+@inject NavigationManager Navigation
+@inject IAuthenticationService AuthService
+@inject ISessionStorageService SessionStorage
 
 <MudContainer MaxWidth="MaxWidth.ExtraSmall"
-              Style="min-height:100vh;display:flex; align-items:center; justify-content:center">
+              Style="min-height:100vh; display: flex; align-items: center; justify-content: center; overflow: hidden;">
     <MudStack Style="align-items:center;">
         <MudPaper Style="padding:0; width:350px">
             <img src="images/gojo.jpg" alt="Login top" class="login-image" />
             <MudForm>
                 <MudStack Style="align-items: center; padding: 24px">
                     <MudText Typo="Typo.h4">Login</MudText>
-                    <MudTextField @bind-Value="userDto.Email" 
+                    <MudTextField @bind-Value="_email" 
                                   Variant="Variant.Outlined" 
                                   Label="E-mail" 
                                   Class="custom-textfield"
                     />
-                    <MudTextField @bind-Value="userDto.Password" 
+                    <MudTextField @bind-Value="_password" 
                                   Variant="Variant.Outlined" 
                                   Label="Password" 
                                   Class="custom-textfield"
                     />
                     <MudStack Row="true">
-                        <MudButton Variant="Variant.Filled" Color="Color.Success">Login</MudButton>
+                        <MudButton OnClick="HandleLogin" Variant="Variant.Filled" Color="Color.Success">Login</MudButton>
                         <MudButton OnClick="ToRegisterPage" Variant="Variant.Filled">Register</MudButton>
                     </MudStack>
+                    @if (!string.IsNullOrEmpty(_errorMessage))
+                    {
+                        <MudText Color="Color.Error">@_errorMessage</MudText>
+                    }
                 </MudStack>
             </MudForm>
         </MudPaper>
@@ -49,11 +55,32 @@
 </style>
 
 @code {
-    private UserManagementDto userDto { get; set; } = new();
+    private MudForm _form = new();
+    private string _email = string.Empty;
+    private string _password = string.Empty;
+    private string _errorMessage = string.Empty;
+
+    private async Task HandleLogin()
+    {
+        try
+        {
+            var result = await AuthService.LoginAsync(new LoginRequestDto { Email = _email, Password = _password, });
+            await SessionStorage.SetItemAsync("authToken", result.Token);
+            Navigation.NavigateTo("/home");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            _errorMessage = "Invalid email or password";
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Unexpected error: {ex.Message}";
+        }
+    }
 
     private void ToRegisterPage()
     {
-        NavigationManager.NavigateTo("/register");
+        Navigation.NavigateTo("/register");
     }
 
 }
