@@ -1,6 +1,8 @@
 ﻿@page "/users"
+@using Prothus.UI.Components.Dialogs
 
 @inject IUserQueryService UserQueryService
+@inject IDialogService DialogService
 
 <MudContainer MaxWidth="MaxWidth.False">
     <MudDataGrid T="UserQueryDto" 
@@ -10,23 +12,38 @@
                     RowClick="@RowClicked" 
                     RowContextMenuClick="@RowRightClicked"
                     SelectedItemsChanged="@SelectedItemsChanged">
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">Users</MudText>
-            <MudSpacer />
-            <MudTextField @bind-Value="_searchString" 
-                            Placeholder="Search" 
-                            Adornment="Adornment.Start" 
-                            Immediate="true" 
-                            AdornmentIcon="@Icons.Material.Filled.Search" 
-                            IconSize="Size.Medium" 
-            />
+        <ToolBarContent >
+            <MudStack Row Style="width: 100%;">
+                <MudText Typo="Typo.h6">Users</MudText>
+                <MudSpacer />
+                <MudStack Row Justify="Justify.FlexEnd">
+                    <MudTextField @bind-Value="_searchString" 
+                                    Placeholder="Search" 
+                                    Adornment="Adornment.Start" 
+                                    Immediate="true" 
+                                    AdornmentIcon="@Icons.Material.Filled.Search" 
+                                    IconSize="Size.Medium" 
+                                    Variant="Variant.Outlined"
+                    />
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddUserDialog">
+                        Add User
+                    </MudButton>
+                </MudStack>
+            </MudStack>
         </ToolBarContent>
         <Columns>
             <SelectColumn T="UserQueryDto" />
-            <PropertyColumn Property="x => x.Id" Title="Id" />
-            <PropertyColumn Property="x => x.Name" Title="Name" />
             <PropertyColumn Property="x => x.Email" Title="Email" />
+            <PropertyColumn Property="x => x.Name" Title="Name" />
             <PropertyColumn Property="x => x.DateCreated" Title="Date Created" />
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Edit</MudButton>
+                        <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Error">Delete</MudButton>
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
         </Columns>
         <PagerContent>
             <MudDataGridPager T="UserQueryDto" />
@@ -45,6 +62,24 @@
 
     }
 
+    private async Task OpenAddUserDialog()
+    {
+        var parameters = new DialogParameters();
+        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+
+        var dialog = await DialogService.ShowAsync<AddUserDialog>("Add New User", parameters, options);
+        var result = await dialog.Result;
+
+        if (result is not null && !result.Canceled)
+        {
+            _users = await UserQueryService.GetUsersAsync();
+            StateHasChanged();
+        }
+    }
+
+    ///////////
+    // Eventos
+    ///////////
     void RowClicked(DataGridRowClickEventArgs<UserQueryDto> args)
     {
         _events.Insert(0, $"Event = RowClick, Index = {args.RowIndex}, Data = {System.Text.Json.JsonSerializer.Serialize(args.Item)}");

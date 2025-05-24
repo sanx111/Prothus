@@ -6,7 +6,7 @@ using BCrypt;
 
 namespace Prothus.Application.Services
 {
-    public class UserManagementService : IRegisterUserService
+    public class UserManagementService : IUserManagementService
     {
         private readonly IUserRepository _RegisterUserRepository;
         public UserManagementService(IUserRepository userRepository)
@@ -19,6 +19,7 @@ namespace Prothus.Application.Services
             var user = new User
             {
                 Id = Guid.NewGuid(),
+                Name = dto.Name,
                 Email = dto.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
             };

@@ -32,7 +32,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddMudServices();
 
-builder.Services.AddScoped<IRegisterUserService, UserManagementService>();
+builder.Services.AddScoped<IUserManagementService, UserManagementService>();
 builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddHttpClient();

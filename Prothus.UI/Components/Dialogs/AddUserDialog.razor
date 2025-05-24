@@ -1,0 +1,37 @@
+﻿@inject IDialogService DialogService
+@inject IUserManagementService UserManagementService
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.h6">Add New User</MudText>
+        <MudTextField @bind-Value="User.Name" Label="Name" Variant="Variant.Outlined" Required="true" />
+        <MudTextField @bind-Value="User.Email" Label="Email" Variant="Variant.Outlined" Required="true" />
+        <MudTextField @bind-Value="User.Password" Label="Password"  Variant="Variant.Outlined" Required="true" InputType="InputType.Password" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton OnClick="Save">Save</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    private UserManagementDto User = new();
+    private string _message = string.Empty;
+
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+
+    public async Task Save()
+    {
+        try
+        {
+            await UserManagementService.RegisterUserAsync(User);
+            _message = "User registered successfuly";
+        }
+        catch (Exception ex)
+        {
+            _message = $"Error: {ex.Message}";
+        }
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}
