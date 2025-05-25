@@ -22,12 +22,6 @@ namespace Prothus.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveAsync(User user)
-        {
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<List<UserQueryDto>> GetUsersAsync()
         {
             return await _context.Users.Select(x => new UserQueryDto()
@@ -45,9 +39,5 @@ namespace Prothus.Infrastructure.Repositories
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public async Task<User?> GetByIdAsync(Guid id)
-        {
-            return await _context.Users.FindAsync(id);
-        }
     }
 }

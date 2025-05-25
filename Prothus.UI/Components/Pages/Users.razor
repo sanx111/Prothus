@@ -25,7 +25,7 @@
                                     IconSize="Size.Medium" 
                                     Variant="Variant.Outlined"
                     />
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@OpenAddUserDialog">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenAddUserDialog">
                         Add User
                     </MudButton>
                 </MudStack>
@@ -40,7 +40,7 @@
                 <CellTemplate>
                     <MudStack Row>
                         <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Edit</MudButton>
-                        <MudButton OnClick="@OpenRemoveUserDialog" Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Error">Delete</MudButton>
+                        <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Error">Delete</MudButton>
                     </MudStack>
                 </CellTemplate>
             </TemplateColumn>
@@ -59,6 +59,7 @@
     protected override async Task OnInitializedAsync()
     {
         _users = await UserQueryService.GetUsersAsync();
+
     }
 
     private async Task OpenAddUserDialog()
@@ -76,23 +77,8 @@
         }
     }
 
-    private async Task OpenRemoveUserDialog()
-    {
-        var parameters = new DialogParameters();
-        var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
-
-        var dialog = await DialogService.ShowAsync<RemoveUserDialog>("Remove User", parameters, options);
-        var result = await dialog.Result;
-
-        if (result is not null && !result.Canceled)
-        {
-            _users = await UserQueryService.GetUsersAsync();
-            StateHasChanged();
-        }
-    }
-
     ///////////
-    // Events
+    // Eventos
     ///////////
     void RowClicked(DataGridRowClickEventArgs<UserQueryDto> args)
     {
