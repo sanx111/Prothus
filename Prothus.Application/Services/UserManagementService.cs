@@ -8,10 +8,10 @@ namespace Prothus.Application.Services
 {
     public class UserManagementService : IUserManagementService
     {
-        private readonly IUserRepository _RegisterUserRepository;
+        private readonly IUserRepository _UserRepository;
         public UserManagementService(IUserRepository userRepository)
         {
-            _RegisterUserRepository = userRepository;
+            _UserRepository = userRepository;
         }
 
         public async Task RegisterUserAsync(UserManagementDto dto)
@@ -24,7 +24,15 @@ namespace Prothus.Application.Services
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
             };
 
-            await _RegisterUserRepository.AddAsync(user);
+            await _UserRepository.AddAsync(user);
+        }
+
+        public async Task DeleteUserAsync(Guid userId)
+        {
+            var user = await _UserRepository.GetByIdAsync(userId)
+                ?? throw new KeyNotFoundException($"Usuário com ID {userId} não encontrado");
+
+            await _UserRepository.RemoveAsync(user);
         }
     }
 }
