@@ -10,5 +10,6 @@ namespace Prothus.Application.Interfaces
     public interface IUserManagementService
     {
         Task RegisterUserAsync(UserManagementDto dto);
+        Task DeleteUserAsync(Guid id);
     }
 }

@@ -26,5 +26,14 @@ namespace Prothus.Application.Services
 
             await _RegisterUserRepository.AddAsync(user);
         }
+
+        public async Task DeleteUserAsync(Guid id)
+        {
+            var user = await _RegisterUserRepository.GetByIdAsync(id);
+            if (user is null)
+                throw new Exception("User not found");
+
+            await _RegisterUserRepository.RemoveAsync(user);
+        }
     }
 }

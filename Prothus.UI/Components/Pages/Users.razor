@@ -3,6 +3,8 @@
 
 @inject IUserQueryService UserQueryService
 @inject IDialogService DialogService
+@inject IUserManagementService UserManagementService
+@inject ISnackbar Snackbar
 
 <MudContainer MaxWidth="MaxWidth.False">
     <MudDataGrid T="UserQueryDto" 
@@ -40,7 +42,7 @@
                 <CellTemplate>
                     <MudStack Row>
                         <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Primary">Edit</MudButton>
-                        <MudButton Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Error">Delete</MudButton>
+                        <MudButton OnClick="@(() => OpenDeleteDialog(context.Item))" Size="@Size.Small" Variant="@Variant.Filled" Color="@Color.Error">Delete</MudButton>
                     </MudStack>
                 </CellTemplate>
             </TemplateColumn>
@@ -74,6 +76,26 @@
         {
             _users = await UserQueryService.GetUsersAsync();
             StateHasChanged();
+        }
+    }
+
+    private async Task OpenDeleteDialog(UserQueryDto user)
+    {
+        var parameters = new DialogParameters
+            {
+                ["User"] = user
+            };
+
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall, FullWidth = true};
+
+        var dialog = await DialogService.ShowAsync<DeleteUserDialog>("Confirm delete", parameters, options);
+        var result = await dialog.Result;
+
+        if (result is not null && !result.Canceled)
+        {
+            await UserManagementService.DeleteUserAsync(user.Id);
+            _users = await UserQueryService.GetUsersAsync();
+            Snackbar.Add("User deleted.", Severity.Success);
         }
     }
 
