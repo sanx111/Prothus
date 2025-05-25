@@ -8,17 +8,20 @@
 @inject IAuthenticationService AuthService
 @inject ISessionStorageService SessionStorage
 
-<MudContainer Style="min-height:100vh; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-    <MudStack Style="align-items:center;" Row=true>
-        <img src="images/gojo2.jpg" alt="login left" class=".login-image" margin-right:0px />
-        <MudPaper Elevation=0 Style="padding:0; width:350px">
+<MudContainer MaxWidth="MaxWidth.False" Style="height: 100vh; display: flex; padding: 0;">
+    <MudContainer Style="flex: 1; display: flex; align-items: center; justify-content: center;">
+        <MudImage ObjectFit="ObjectFit.Fill" Src="images/gojo2.jpg" Class="login-image" />
+    </MudContainer>
+
+    <MudContainer Style="flex:1; display:flex; justify-content:center; align-items:center;">
+        <MudStack>
             <MudForm>
                 <MudStack Style="align-items: center; padding: 24px">
                     <MudText Typo="Typo.h4">Login</MudText>
                     <MudTextField @bind-Value="_email" 
-                                  Variant="Variant.Filled" 
-                                  Label="E-mail" 
-                                  Class="custom-textfield"
+                                    Variant="Variant.Filled" 
+                                    Label="E-mail" 
+                                    Class="custom-textfield"
                     />
                     <MudTextField @bind-Value="_password" 
                                   Variant="Variant.Filled" 
@@ -26,10 +29,14 @@
                                   Class="custom-textfield"
                                   InputType="InputType.Password"
                     />
-                    <MudStack Row="true">
-                        <MudButton  Style="width:300px" OnClick="HandleLogin" Variant="Variant.Filled" Color="Color.Success">Login</MudButton>
-                        @*<MudButton OnClick="ToRegisterPage" Variant="Variant.Filled">Register</MudButton>*@
-                    </MudStack>
+                    
+                    <MudButton Style="width:300px" 
+                                OnClick="HandleLogin" 
+                                Variant="Variant.Filled" 
+                                Color="Color.Success">
+                                Login
+                    </MudButton>
+                    
                     @if (!string.IsNullOrEmpty(_errorMessage))
                     {
                         <MudText Color="Color.Error">@_errorMessage</MudText>
@@ -37,7 +44,7 @@
                 </MudStack>
                    <MudDivider></MudDivider>
                    <MudText Align="Align.Center">or login with</MudText>
-                <MudStack Style="align-items:center;justify-content:center; width:100%;" Row=true >
+                <MudStack Style="align-items: center;justify-content: center; width: 100%;" Row=true >
                     <MudButton 
                                Variant="Variant.Filled"
                                style="width:150px"
@@ -53,14 +60,16 @@
                     </MudButton>
                    </MudStack>
             </MudForm>
-        </MudPaper>
-    </MudStack>    
+        </MudStack>
+    </MudContainer>
+
 </MudContainer>
+
 
 <style>
     .login-image{
-        width: fit-content;
-        height: fit-content;
+        max-width: 100%;
+        max-height: 100%;
         object-fit: cover;
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
