@@ -8,42 +8,96 @@
 @inject IAuthenticationService AuthService
 @inject ISessionStorageService SessionStorage
 
-<MudContainer MaxWidth="MaxWidth.ExtraSmall"
-              Style="min-height:100vh; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-    <MudStack Style="align-items:center;">
-        <MudPaper Style="padding:0; width:350px">
-            <img src="images/gojo.jpg" alt="Login top" class="login-image" />
+<MudContainer xs="12" md="3" MaxWidth="MaxWidth.False" Style="height: 100vh; display: flex; padding: 0;">
+    <MudContainer xs="12" md="3" Style="flex: 1; display: flex; align-items: center; justify-content: center;">
+        <MudCarousel Class="mud-width-full" Style="height:100%" EnableSwipeGesture=false ShowArrows=false ShowBullets=false AutoCycle="true" TData="object">
+            <MudCarouselItem Transition="Transition.Fade">
+            <div class="d-flex" style="height:100%">
+                <img src="images/asuka.jpg" />
+            </div>
+            </MudCarouselItem>
+            <MudCarouselItem Transition="Transition.Fade">
+                <div class="d-flex" style="height:100%">
+                    <img src="images/satoru.jpg" />
+                </div>
+            </MudCarouselItem>
+            <MudCarouselItem Transition="Transition.Fade">
+                <div class="d-flex" style="height:100%">
+                    <img src="images/guts.jpg" />
+                </div>
+            </MudCarouselItem>
+            <MudCarouselItem Transition="Transition.Fade">
+                <div class="d-flex" style="height:100%">
+                    <img src="images/fate.jpg" />
+                </div>
+            </MudCarouselItem>
+        </MudCarousel>
+    </MudContainer>
+
+    <MudContainer xs="12" md="3" Style="flex:1; display:flex; justify-content:center; align-items:center;">
+        <MudStack Style=" display:flex; justify-content:center; align-items:center; height:100%">
+
+            <MudStack Row=true Style="position: absolute; top: 39px; right: 75px; z-index: 10; justify-content:end; align-items:end">
+                <MudText Typo="Typo.subtitle1" Style="opacity:0.5">no account?</MudText>
+                <MudButton OnClick="ToRegisterPage" Size="Size.Small" Variant="Variant.Text">Register</MudButton>
+        </MudStack>
+        <MudStack>
             <MudForm>
                 <MudStack Style="align-items: center; padding: 24px">
-                    <MudText Typo="Typo.h4">Login</MudText>
-                    <MudTextField @bind-Value="_email" 
-                                  Variant="Variant.Outlined" 
-                                  Label="E-mail" 
-                                  Class="custom-textfield"
+                    <MudText Style="font-weight:bold" Typo="Typo.h4">Login</MudText>
+                    <MudTextField   @bind-Value="_email" 
+                                    Variant="Variant.Filled" 
+                                    Label="E-mail" 
+                                    Class="custom-textfield"
                     />
                     <MudTextField @bind-Value="_password" 
-                                  Variant="Variant.Outlined" 
+                                  Variant="Variant.Filled" 
                                   Label="Password" 
                                   Class="custom-textfield"
+                                  InputType="InputType.Password"
                     />
-                    <MudStack Row="true">
-                        <MudButton OnClick="HandleLogin" Variant="Variant.Filled" Color="Color.Success">Login</MudButton>
-                        <MudButton OnClick="ToRegisterPage" Variant="Variant.Filled">Register</MudButton>
-                    </MudStack>
+                    
+                    <MudButton Style="width:300px" 
+                                OnClick="HandleLogin" 
+                                Variant="Variant.Filled" 
+                                Color="Color.Success">
+                                Login
+                    </MudButton>
+                    
                     @if (!string.IsNullOrEmpty(_errorMessage))
                     {
                         <MudText Color="Color.Error">@_errorMessage</MudText>
                     }
                 </MudStack>
+                   <MudDivider></MudDivider>
+                   <MudText Align="Align.Center">or login with</MudText>
+                <MudStack Style="align-items: center;justify-content: center; width: 100%;" Row=true >
+                    <MudButton
+                               Variant="Variant.Filled"
+                               style="width:150px"
+                               Color="Color.Secondary"
+                               EndIcon="@Icons.Custom.Brands.Google">
+                        Google
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled"
+                               style="width:150px"
+                               Color="Color.Primary"
+                               EndIcon="@Icons.Custom.Brands.GitHub">
+                        GitHub
+                    </MudButton>
+                   </MudStack>
             </MudForm>
-        </MudPaper>
-    </MudStack>    
+        </MudStack>
+        </MudStack>
+    </MudContainer>
 </MudContainer>
+
+
 
 <style>
     .login-image{
-        width: 100%;
-        height: 180px;
+        max-width: 100%;
+        max-height: 100%;
         object-fit: cover;
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -78,7 +132,11 @@
         }
     }
 
-    private void ToRegisterPage()
+    
+
+
+
+private void ToRegisterPage()
     {
         Navigation.NavigateTo("/register");
     }

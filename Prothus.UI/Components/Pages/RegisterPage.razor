@@ -8,18 +8,33 @@
 @inject NavigationManager NavigationManager
 @inject IUserManagementService IRegisterUserService
 
-<MudContainer>
-    <MudStack>
-        <MudPaper>
-            
-            <MudForm Style="align-items:center;">
-                <MudText Typo="Typo.h4">Register</MudText>
-                <MudTextField @bind-Value="_name" Label="Name" Variant="Variant.Outlined"></MudTextField>
-                <MudTextField @bind-Value="_email" Label="E-mail" Variant="Variant.Outlined"></MudTextField>
-                <MudTextField @bind-Value="_password" Label="Password" InputType="InputType.Password" Variant="Variant.Outlined"></MudTextField>
-                <MudStack>
-                    <MudButton OnClick="RegisterUser" Variant="Variant.Filled" Color="Color.Success">Register</MudButton>
-                    <MudButton OnClick="Cancel" Variant="Variant.Filled" Color="Color.Primary">Back</MudButton>
+<MudContainer xs="12" md="3" Style="background-color:whitesmoke;height:100vh;flex:1; display:flex; justify-content:center; align-items:center;">
+    <MudStack Style="width:450px">
+        <MudPaper Style="padding-top:30px;padding-bottom:30px" Elevation="1">
+            <MudForm Spacing="5" Style="align-items:center;">
+                <MudIcon Icon="@Icons.Custom.Uncategorized.Radioactive" Size="Size.Large" />
+                <MudText Style="font-weight:bold" Typo="Typo.h4">Register</MudText>
+                <MudStack Spacing="2" Row=true>
+                    <MudButton Variant="Variant.Filled"
+                               Style="width:150px"
+                               color="Color.Secondary"
+                               EndIcon="@Icons.Custom.Brands.Google">
+                        Google
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled"
+                               style="width:150px"
+                               Color="Color.Primary"
+                               EndIcon="@Icons.Custom.Brands.GitHub">
+                        GitHub
+                    </MudButton>
+                </MudStack>
+                <MudStack Spacing="2">
+                <MudDivider Style="width:300px"></MudDivider>
+                <MudTextField Style="width:300px" @bind-Value="_name" Label="Name" Variant="Variant.Outlined"></MudTextField>
+                <MudTextField Style="width:300px" @bind-Value="_email" Label="E-mail" Variant="Variant.Outlined"></MudTextField>
+                <MudTextField Style="width:300px" @bind-Value="_password" Label="Password" InputType="InputType.Password" Variant="Variant.Outlined"></MudTextField>
+                    <MudButton Style="width:300px" OnClick="RegisterUser" Variant="Variant.Filled" Color="Color.Success">Register</MudButton>
+                    <MudButton OnClick="Cancel" Variant="Variant.Text" >Back</MudButton>
                 </MudStack>
             </MudForm>
         </MudPaper>
@@ -29,6 +44,10 @@
     <MudAlert Severity="Severity.Info">@_message</MudAlert>
     }   
 </MudContainer>
+<style>
+
+ 
+</style>
 
 @code {
     private MudForm form = new();
