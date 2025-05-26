@@ -46,12 +46,12 @@
                 <MudStack Style="align-items: center; padding: 24px">
                     <MudText Style="font-weight:bold" Typo="Typo.h4">Login</MudText>
                     <MudTextField   @bind-Value="_email" 
-                                    Variant="Variant.Filled" 
+                                    Variant="Variant.Outlined" 
                                     Label="E-mail" 
                                     Class="custom-textfield"
                     />
                     <MudTextField @bind-Value="_password" 
-                                  Variant="Variant.Filled" 
+                                  Variant="Variant.Outlined" 
                                   Label="Password" 
                                   Class="custom-textfield"
                                   InputType="InputType.Password"
@@ -70,16 +70,16 @@
                     }
                 </MudStack>
                    <MudDivider></MudDivider>
-                   <MudText Align="Align.Center">or login with</MudText>
+                   <MudText Align="Align.Center" Style="margin: 10px;">or login with</MudText>
                 <MudStack Style="align-items: center;justify-content: center; width: 100%;" Row=true >
                     <MudButton
-                               Variant="Variant.Filled"
+                               Variant="Variant.Outlined"
                                style="width:150px"
                                Color="Color.Secondary"
                                EndIcon="@Icons.Custom.Brands.Google">
                         Google
                     </MudButton>
-                    <MudButton Variant="Variant.Filled"
+                    <MudButton Variant="Variant.Outlined"
                                style="width:150px"
                                Color="Color.Primary"
                                EndIcon="@Icons.Custom.Brands.GitHub">
