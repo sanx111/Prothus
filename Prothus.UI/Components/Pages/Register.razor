@@ -1,6 +1,5 @@
-﻿
+﻿@page "/register"
 
-@page "/register"
 @using Prothus.Application.DTOs
 @using Prothus.Application.Services
 @using Prothus.Application.Interfaces
@@ -8,33 +7,36 @@
 @inject NavigationManager NavigationManager
 @inject IUserManagementService IRegisterUserService
 
-<MudContainer xs="12" md="3" Style="background-color:whitesmoke;height:100vh;flex:1; display:flex; justify-content:center; align-items:center;">
+<MudContainer xs="12" md="3" Style="height:100vh;flex:1; display:flex; justify-content:center; align-items:center;">
     <MudStack Style="width:450px">
         <MudPaper Style="padding-top:30px;padding-bottom:30px" Elevation="1">
             <MudForm Spacing="5" Style="align-items:center;">
                 <MudIcon Icon="@Icons.Custom.Uncategorized.Radioactive" Size="Size.Large" />
                 <MudText Style="font-weight:bold" Typo="Typo.h4">Register</MudText>
                 <MudStack Spacing="2" Row=true>
-                    <MudButton Variant="Variant.Filled"
+                    <MudButton Variant="Variant.Outlined"
                                Style="width:150px"
                                color="Color.Secondary"
                                EndIcon="@Icons.Custom.Brands.Google">
                         Google
                     </MudButton>
-                    <MudButton Variant="Variant.Filled"
+                    <MudButton Variant="Variant.Outlined"
                                style="width:150px"
                                Color="Color.Primary"
                                EndIcon="@Icons.Custom.Brands.GitHub">
                         GitHub
                     </MudButton>
                 </MudStack>
-                <MudStack Spacing="2">
-                <MudDivider Style="width:300px"></MudDivider>
-                <MudTextField Style="width:300px" @bind-Value="_name" Label="Name" Variant="Variant.Outlined"></MudTextField>
-                <MudTextField Style="width:300px" @bind-Value="_email" Label="E-mail" Variant="Variant.Outlined"></MudTextField>
-                <MudTextField Style="width:300px" @bind-Value="_password" Label="Password" InputType="InputType.Password" Variant="Variant.Outlined"></MudTextField>
+                <MudStack Spacing="2" Style="width: 300px;">
+                    <MudDivider Class="divider"></MudDivider>
+                    <MudTextField @bind-Value="_name" Label="Name" Variant="Variant.Outlined"></MudTextField>
+                    <MudTextField @bind-Value="_email" Label="E-mail" Variant="Variant.Outlined"></MudTextField>
+                    <MudTextField @bind-Value="_password" Label="Password" InputType="InputType.Password" Variant="Variant.Outlined"></MudTextField>
+                    <MudDivider Class="divider"></MudDivider>
+                <MudStack>
                     <MudButton Style="width:300px" OnClick="RegisterUser" Variant="Variant.Filled" Color="Color.Success">Register</MudButton>
-                    <MudButton OnClick="Cancel" Variant="Variant.Text" >Back</MudButton>
+                    <MudButton OnClick="Cancel" Variant="Variant.Text">Back</MudButton>
+                </MudStack>
                 </MudStack>
             </MudForm>
         </MudPaper>
@@ -45,7 +47,14 @@
     }   
 </MudContainer>
 <style>
+    body {
+        background-color:whitesmoke;
+    }
 
+    .divider {
+        width: 100%;
+        margin: 10px 0px;
+    }
  
 </style>
 
