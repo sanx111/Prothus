@@ -1,5 +1,6 @@
 ﻿@inject IDialogService DialogService
 @inject IUserManagementService UserManagementService
+@inject ISnackbar Snackbar
 
 <MudDialog>
     <DialogContent>
@@ -24,7 +25,7 @@
         try
         {
             await UserManagementService.RegisterUserAsync(User);
-            _message = "User registered successfuly";
+            MudDialog.Close(DialogResult.Ok(true));
         }
         catch (Exception ex)
         {

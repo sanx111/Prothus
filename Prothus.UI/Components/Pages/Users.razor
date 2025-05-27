@@ -75,6 +75,7 @@
         if (result is not null && !result.Canceled)
         {
             _users = await UserQueryService.GetUsersAsync();
+            Snackbar.Add("User added.", Severity.Success);
             StateHasChanged();
         }
     }
