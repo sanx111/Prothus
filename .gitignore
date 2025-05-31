@@ -57,3 +57,4 @@ nunit-*.xml
 .vscode/settings.json
 .vscode/launch.json
 .vscode/tasks.json
+Prothus.UI/appsettings.Development.json
